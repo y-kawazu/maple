@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社シンセイテック | 福岡県須惠町の信頼できる電気工事業者</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',    /* スレートダーク */
+                            primary: '#1e3a8a', /* 信頼のディープネイビー */
+                            secondary: '#2563eb',/* 実直なミドルブルー */
+                            accent: '#0ea5e9',   /* 清潔感のあるスカイブルー */
+                            light: '#f8fafc',   /* すっきりとしたライトグレー */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Leaflet.js (Map Library) CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        /* カスタム微調整 */
+        html {
+            scroll-behavior: smooth;
+        }
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+        }
+        /* マップのピンデザイン調整 */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-brand-light text-slate-800 font-sans antialiased selection:bg-brand-secondary selection:text-white">
+
+    <!-- ヘッダー / ナビゲーション -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- ロゴ・社名 -->
+                <a href="#hero" class="flex flex-col">
+                    <span class="text-xs font-bold text-brand-secondary tracking-widest leading-none">福岡県糟屋郡須惠町</span>
+                    <span class="text-xl sm:text-2xl font-black text-brand-primary tracking-wide mt-1">株式会社シンセイテック</span>
+                </a>
+
+                <!-- デスクトップ用メニュー -->
+                <nav class="hidden md:flex space-x-8 items-center text-sm font-medium text-slate-600">
+                    <a href="#about" class="hover:text-brand-secondary transition-colors py-2">私たちについて</a>
+                    <a href="#services" class="hover:text-brand-secondary transition-colors py-2">対応工事案内</a>
+                    <a href="#calculator" class="hover:text-brand-secondary transition-colors py-2">簡易相談窓口</a>
+                    <a href="#company" class="hover:text-brand-secondary transition-colors py-2">会社概要</a>
+                    <a href="#contact" class="bg-brand-primary text-white hover:bg-brand-secondary transition-all px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        092-404-2391
+                    </a>
+                </nav>
+
+                <!-- モバイルメニュー用ボタン -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none" aria-label="メニューを開閉">
+                    <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- モバイルドロワーメニュー -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-6 space-y-3 transition-all duration-300">
+            <a href="#about" class="block py-2 px-3 rounded-lg text-slate-700 hover:bg-slate-50 hover:text-brand-secondary transition">私たちについて</a>
+            <a href="#services" class="block py-2 px-3 rounded-lg text-slate-700 hover:bg-slate-50 hover:text-brand-secondary transition">対応工事案内</a>
+            <a href="#calculator" class="block py-2 px-3 rounded-lg text-slate-700 hover:bg-slate-50 hover:text-brand-secondary transition">簡易相談窓口</a>
+            <a href="#company" class="block py-2 px-3 rounded-lg text-slate-700 hover:bg-slate-50 hover:text-brand-secondary transition">会社概要</a>
+            <div class="pt-4 border-t border-slate-100">
+                <a href="tel:092-404-2391" class="w-full flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-secondary text-white py-3 rounded-xl font-bold transition shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    092-404-2391 にかける
+                </a>
+                <p class="text-center text-xs text-slate-500 mt-2">受付：平日 9:00〜17:00 / 土日祝休</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section id="hero" class="relative pt-32 pb-20 md:pt-44 md:pb-32 bg-gradient-to-br from-slate-900 via-slate-800 to-brand-primary overflow-hidden">
+        <!-- バックグラウンド装飾（実直・技術的幾何学パターン） -->
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 10H100M0 30H100M0 50H100M0 70H100M0 90H100" stroke="white" stroke-width="0.5"/>
+                <path d="M10 0V100M30 0V100M50 0V100M70 0V100M90 0V100" stroke="white" stroke-width="0.5"/>
+            </svg>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- キャッチコピー -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-brand-accent/20 text-brand-accent tracking-wider uppercase">
+                        福岡県知事許可 第106370号
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
+                        確かな技術と実直な施工。<br>
+                        <span class="text-brand-accent">電気インフラ</span>の安全を守る。
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0">
+                        株式会社シンセイテックは、福岡県糟屋郡須惠町を拠点とする電気工事のエキスパートです。小規模な設備交換から大規模な道路インフラまで、安心安全を約束する丁寧な仕事をお届けします。
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#services" class="px-8 py-4 rounded-xl font-bold bg-brand-secondary hover:bg-blue-500 text-white shadow-lg transition-all flex items-center justify-center gap-2">
+                            対応工事を確認する
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+                        <a href="#company" class="px-8 py-4 rounded-xl font-semibold border border-slate-500 hover:border-white text-slate-200 hover:text-white transition-all flex items-center justify-center">
+                            会社概要
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 信頼をアピールするステータスカード -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-white/10 text-white space-y-6 shadow-2xl">
+                        <h3 class="text-lg font-bold border-b border-white/10 pb-3 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                            シンセイテックが選ばれる理由
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                                    <span class="font-bold text-sm text-brand-accent">01</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm">地域密着の迅速な対応力</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">糟屋郡、福岡市内を中心にフットワーク軽く柔軟に駆けつけます。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                                    <span class="font-bold text-sm text-brand-accent">02</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm">難関・専門工事の実績</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">交通信号機や避雷針、電気防食まで、卓越した国家資格者が対応。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                                    <span class="font-bold text-sm text-brand-accent">03</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm">「実直さ」を第一にした明朗会計</h4>
+                                    <p class="text-xs text-slate-300 mt-0.5">不要な提案や不透明な追加費用は一切なし。安心のお見積りをお約束。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 私たちについて -->
+    <section id="about" class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="text-brand-secondary font-bold text-sm tracking-wider uppercase">ABOUT US</span>
+                <h2 class="text-3xl font-extrabold text-brand-primary">
+                    見えないところこそ、手を抜かない。<br>
+                    それが私たちの「実直」です。
+                </h2>
+                <div class="h-1 w-16 bg-brand-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <p class="text-slate-700 leading-relaxed">
+                        私たち<strong>株式会社シンセイテック</strong>は、電気のトラブルや新設に真っ直ぐ向き合う技術者集団です。
+                        現代社会において、電気は水や空気と同じように「あって当たり前」の存在です。だからこそ、私たちの仕事はミリ単位の狂いも許されない、絶対の安全性が求められます。
+                    </p>
+                    <p class="text-slate-700 leading-relaxed">
+                        看板や店舗用の華やかなネオン設備から、人々の安全を守る交通信号、さらには建物の安全性を高める避雷針工事、金属を守る電気防食にいたるまで、多種多様なニーズに応えられる許可とノウハウを有しております。
+                    </p>
+                    <p class="text-slate-700 leading-relaxed font-semibold text-brand-primary">
+                        「頼んでよかった、また次もお願いしたい」と言っていただける信頼の電気インフラパートナーを目指します。
+                    </p>
+                </div>
+                <div class="bg-brand-light p-6 sm:p-10 rounded-2xl border border-slate-100 flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-brand-secondary pl-4">
+                            <span class="block text-xs text-slate-500 font-bold uppercase tracking-widest">PHILOSOPHY</span>
+                            <span class="text-lg font-bold text-brand-primary">シンセイテックの3大誓約</span>
+                        </div>
+                        <ul class="space-y-4 text-sm text-slate-600">
+                            <li class="flex items-start gap-2">
+                                <span class="bg-brand-primary text-white w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">1</span>
+                                <div>
+                                    <strong class="text-slate-800">有資格者による完全施工</strong>
+                                    <p class="text-xs text-slate-500 mt-1">すべての工程において、電気工事業の資格を有した熟練技術者が責任を持って指揮を執ります。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-brand-primary text-white w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">2</span>
+                                <div>
+                                    <strong class="text-slate-800">徹底的な安全検証</strong>
+                                    <p class="text-xs text-slate-500 mt-1">工事完了後のテスター・絶縁検査を徹底。将来の断線、感電、ショートなどのリスクを完全に排除します。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-brand-primary text-white w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">3</span>
+                                <div>
+                                    <strong class="text-slate-800">地域経済への寄与と貢献</strong>
+                                    <p class="text-xs text-slate-500 mt-1">糟屋郡須惠町を誇りに思い、地域の学校、商業施設、工場の設備改善にいち早く寄り添う体制を維持します。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 事業案内（対応工事案内） -->
+    <section id="services" class="py-20 md:py-28 bg-brand-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="text-brand-secondary font-bold text-sm tracking-wider uppercase">OUR SERVICES</span>
+                <h2 class="text-3xl font-extrabold text-brand-primary">対応工事について</h2>
+                <p class="text-slate-500 text-sm">小規模な修繕から、専門的な高所・インフラ工事まで一貫して自社管理で対応します。</p>
+                <div class="h-1 w-16 bg-brand-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 1. 一般電気工事 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-brand-accent/30 transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <!-- Lightning icon -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-brand-primary mb-2">一般電気工事</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            住宅、店舗、オフィス、工場などの基本的な電気配線設計、ブレーカー設置、配電盤工事、動力設備工事全般を安全第一に設計・施工します。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-brand-secondary mt-4 block">建設業許可対応</span>
+                </div>
+
+                <!-- 2. コンセント工事 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-brand-accent/30 transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <!-- Plug icon -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                <rect x="6" y="6" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <line x1="10" y1="10" x2="10" y2="14" stroke="currentColor" stroke-width="2"/>
+                                <line x1="14" y1="10" x2="14" y2="14" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-brand-primary mb-2">コンセント工事</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            コンセントの増設、移設、差込口故障の対応、高容量コンセント（IH・エアコン用）の配線増設からEV（電気自動車）用充電コンセントの設置まで対応します。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-brand-secondary mt-4 block">日常のプチ改善歓迎</span>
+                </div>
+
+                <!-- 3. 照明設備工事 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-brand-accent/30 transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <!-- Lightbulb icon -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h0a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-brand-primary mb-2">照明設備工事</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            省エネに配慮したオフィスや工場のLED照明への完全入替工事、高天井用照明、非常時用の誘導灯、住宅用のスマート照明・調光器の施工などを行っています。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-brand-secondary mt-4 block">大幅な電気代削減へ</span>
+                </div>
+
+                <!-- 4. ネオン設備工事 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-brand-accent/30 transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <!-- Neon/Design icon -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9h1v1H9V9zm4 0h1v1h-1V9zm-4 4h6v2H9v-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-brand-primary mb-2">ネオン設備工事</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            商業施設・飲食店などで根強い人気を誇るネオンサインの配線設計や変圧器（トランス）の安全設置、高電圧漏電防止策の徹底などを行います。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-brand-secondary mt-4 block">デザイン性の高い電気設備</span>
+                </div>
+
+                <!-- 5. 引込線工事 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-brand-accent/30 transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <!-- Lead-in wire (pole) icon -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-brand-primary mb-2">引込線工事</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            電力会社の電柱からお客様の敷地内の電気用支持ポール、受電盤まで空中配線を通す工事です。台風や災害に耐える安全確実な引き込みを行います。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-brand-secondary mt-4 block">九州電力申請対応可能</span>
+                </div>
+
+                <!-- 6. 交通信号設備工事 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-brand-accent/30 transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <!-- Traffic signal icon -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect x="8" y="2" width="8" height="20" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <circle cx="12" cy="7" r="2" fill="currentColor"/>
+                                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="12" cy="17" r="2" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-brand-primary mb-2">交通信号設備工事</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            道路安全に不可欠な車両用、歩行者用信号機の新設・移設工事、制御盤の調整など。公共性の極めて高い、高度な施工技術を提供します。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-brand-secondary mt-4 block">確かなインフラ技術</span>
+                </div>
+
+                <!-- 7. 避雷針工事 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-brand-accent/30 transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <!-- Lightning rod icon -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                <line x1="12" y1="2" x2="12" y2="8" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-brand-primary mb-2">避雷針工事</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            万が一の落雷から建物や内部の精密機械、人命を強固に保護するための避雷導線と突針の設置、接地抵抗検査（アース測定）を実施します。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-brand-secondary mt-4 block">落雷・BCP対策</span>
+                </div>
+
+                <!-- 8. 電気防食工事 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-brand-accent/30 transition-all group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <!-- Cathodic protection icon -->
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-brand-primary mb-2">電気防食工事</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            地中配管や港湾施設、水中鋼構造物に対し、電気化学反応を利用して金属の腐食を半永久的に防止する、特殊防錆技術に対応可能です。
+                        </p>
+                    </div>
+                    <span class="text-xs font-bold text-brand-secondary mt-4 block">特殊インフラメンテ</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 簡易相談・お見積りシミュレーター -->
+    <section id="calculator" class="py-20 md:py-28 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-4 mb-12">
+                <span class="text-brand-secondary font-bold text-sm tracking-wider uppercase">SIMULATOR</span>
+                <h2 class="text-3xl font-extrabold text-brand-primary">簡単ご相談シミュレーター</h2>
+                <p class="text-slate-500 text-sm">
+                    電話やお問い合わせ前に、希望の工事内容から簡易お伺い書をシミュレートできます。<br>
+                    そのまま内容をコピーしてお問い合わせいただけます。
+                </p>
+                <div class="h-1 w-16 bg-brand-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="bg-brand-light p-6 sm:p-10 rounded-3xl border border-slate-100 shadow-sm space-y-8">
+                <!-- ステップ1: 工事カテゴリ -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-3">ステップ1: ご希望の工事種別 (複数選択可能)</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="calc-category-group">
+                        <button type="button" class="calc-tag p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-brand-secondary hover:text-brand-secondary transition text-center select-none" data-val="一般電気工事">
+                            一般電気工事
+                        </button>
+                        <button type="button" class="calc-tag p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-brand-secondary hover:text-brand-secondary transition text-center select-none" data-val="コンセント工事">
+                            コンセント工事
+                        </button>
+                        <button type="button" class="calc-tag p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-brand-secondary hover:text-brand-secondary transition text-center select-none" data-val="照明設備工事">
+                            照明設備工事
+                        </button>
+                        <button type="button" class="calc-tag p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-brand-secondary hover:text-brand-secondary transition text-center select-none" data-val="ネオン設備工事">
+                            ネオン設備工事
+                        </button>
+                        <button type="button" class="calc-tag p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-brand-secondary hover:text-brand-secondary transition text-center select-none" data-val="引込線工事">
+                            引込線工事
+                        </button>
+                        <button type="button" class="calc-tag p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-brand-secondary hover:text-brand-secondary transition text-center select-none" data-val="交通信号設備工事">
+                            交通信号設備工事
+                        </button>
+                        <button type="button" class="calc-tag p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-brand-secondary hover:text-brand-secondary transition text-center select-none" data-val="避雷針工事">
+                            避雷針工事
+                        </button>
+                        <button type="button" class="calc-tag p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-brand-secondary hover:text-brand-secondary transition text-center select-none" data-val="電気防食工事">
+                            電気防食工事
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ステップ2: 工事の場所規模 -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-3">ステップ2: 施工対象の建物の種類</label>
+                    <select id="calc-scale" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-secondary transition">
+                        <option value="戸建て（一般個人住宅）">一般の戸建て住宅・アパート</option>
+                        <option value="マンション（集合住宅全体）">分譲マンション・共同住宅全体</option>
+                        <option value="小〜中規模店舗・オフィス">店舗・オフィスのワンフロア</option>
+                        <option value="大型ビル・工場・倉庫">大規模ビル・工場・倉庫設備</option>
+                        <option value="屋外インフラ（道路、敷地内アースなど）">屋外インフラ設備、道路等の敷地</option>
+                    </select>
+                </div>
+
+                <!-- 生成結果 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/60 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-brand-secondary tracking-wider">自動生成されたお伺い内容</span>
+                        <button id="copy-summary-btn" class="text-xs bg-slate-100 hover:bg-brand-primary hover:text-white transition-all px-3 py-1.5 rounded-lg font-bold flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                            内容をクリップボードにコピー
+                        </button>
+                    </div>
+                    <textarea id="calc-output" rows="6" class="w-full bg-slate-50 text-slate-700 border border-slate-200 rounded-xl p-3 text-xs leading-relaxed font-mono focus:outline-none" readonly>※上のボタンから項目を選択すると自動でご相談文章が組み立てられます。</textarea>
+                    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                        <a href="tel:092-404-2391" class="flex-1 text-center bg-brand-primary hover:bg-brand-secondary text-white py-3 rounded-xl font-bold text-sm shadow-sm transition flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            電話で今すぐ相談
+                        </a>
+                        <a href="#contact" class="flex-1 text-center bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold text-sm shadow-sm transition flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l8-5.333a2 2 0 012.22 0l8 5.333A2 2 0 0121 10.07V19a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 21V12h6v9"/></svg>
+                            メールフォームへ添付
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 会社情報・アクセスマップ -->
+    <section id="company" class="py-20 md:py-28 bg-brand-light border-t border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- 会社概要テーブル -->
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-brand-secondary font-bold text-sm tracking-wider uppercase block">COMPANY OVERVIEW</span>
+                    <h2 class="text-3xl font-extrabold text-brand-primary">会社概要</h2>
+                    <p class="text-slate-500 text-sm">
+                        株式会社シンセイテックは、法令を遵守し、お客様と地域社会の安心のために妥協なき高品質施工に努めております。
+                    </p>
+
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+                        <table class="w-full text-left border-collapse">
+                            <tbody>
+                                <tr class="border-b border-slate-100">
+                                    <th class="w-1/3 bg-slate-50 px-5 py-4 text-xs sm:text-sm font-bold text-slate-600">会社名</th>
+                                    <td class="px-5 py-4 text-xs sm:text-sm text-slate-800 font-bold">株式会社シンセイテック</td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <th class="bg-slate-50 px-5 py-4 text-xs sm:text-sm font-bold text-slate-600">代表所在地</th>
+                                    <td class="px-5 py-4 text-xs sm:text-sm text-slate-800 leading-relaxed">
+                                        〒811-2221<br>
+                                        福岡県糟屋郡須惠町大字須恵1087番地1
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <th class="bg-slate-50 px-5 py-4 text-xs sm:text-sm font-bold text-slate-600">法人番号</th>
+                                    <td class="px-5 py-4 text-xs sm:text-sm text-slate-800 font-mono">4290001039492</td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <th class="bg-slate-50 px-5 py-4 text-xs sm:text-sm font-bold text-slate-600">業種</th>
+                                    <td class="px-5 py-4 text-xs sm:text-sm text-slate-800">
+                                        建設業、設備・施設工事業、電気工事業
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <th class="bg-slate-50 px-5 py-4 text-xs sm:text-sm font-bold text-slate-600">建設業許可</th>
+                                    <td class="px-5 py-4 text-xs sm:text-sm text-slate-800 leading-relaxed">
+                                        福岡県知事許可 第106370号<br>
+                                        一般建設業、電気工事業
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <th class="bg-slate-50 px-5 py-4 text-xs sm:text-sm font-bold text-slate-600">資本金</th>
+                                    <td class="px-5 py-4 text-xs sm:text-sm text-slate-800 font-medium">100万円</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-slate-50 px-5 py-4 text-xs sm:text-sm font-bold text-slate-600">電話番号</th>
+                                    <td class="px-5 py-4 text-xs sm:text-sm text-slate-800 font-bold text-brand-secondary">
+                                        <a href="tel:092-404-2391" class="hover:underline">092-404-2391</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- マップエリア -->
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-brand-secondary font-bold text-sm tracking-wider uppercase block">ACCESS MAP</span>
+                    <h2 class="text-3xl font-extrabold text-brand-primary">アクセスマップ</h2>
+                    <p class="text-slate-500 text-sm">
+                        JR香椎線「須恵」駅より車で約5分。駐車場も完備しておりますので、対面相談も可能です。
+                    </p>
+
+                    <!-- Leaflet地図 -->
+                    <div class="bg-white p-2 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <div id="company-map" class="w-full h-80 sm:h-96 rounded-xl relative z-10"></div>
+                        <div class="p-3 bg-slate-50 text-slate-500 text-xs flex justify-between items-center rounded-b-xl border-t border-slate-100">
+                            <span>福岡県糟屋郡須惠町大字須恵1087番地1</span>
+                            <a href="https://www.google.com/maps/search/?api=1&query=福岡県糟屋郡須惠町大字須恵1087番地1" target="_blank" rel="noopener noreferrer" class="text-brand-secondary font-bold hover:underline flex items-center gap-1">
+                                Googleマップで開く
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- よくある質問 FAQ -->
+    <section class="py-20 md:py-28 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-4 mb-16">
+                <span class="text-brand-secondary font-bold text-sm tracking-wider uppercase">FAQ</span>
+                <h2 class="text-3xl font-extrabold text-brand-primary">よくあるご質問</h2>
+                <div class="h-1 w-16 bg-brand-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="space-y-4">
+                <!-- 質問 1 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden transition">
+                    <button class="faq-btn w-full text-left px-6 py-5 bg-slate-50 hover:bg-slate-100/70 flex justify-between items-center focus:outline-none">
+                        <span class="font-bold text-slate-800 text-sm sm:text-base">個人宅の小さなコンセント工事や照明の相談だけでも大丈夫ですか？</span>
+                        <svg class="faq-arrow w-5 h-5 text-slate-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content hidden px-6 py-5 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white">
+                        はい、喜んで承ります。「コンセントの調子が悪い」「スイッチを交換したい」といった小さなご依頼でも、プロの有資格者が丁寧に対応させていただきます。どうぞお気軽にご相談ください。
+                    </div>
+                </div>
+
+                <!-- 質問 2 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden transition">
+                    <button class="faq-btn w-full text-left px-6 py-5 bg-slate-50 hover:bg-slate-100/70 flex justify-between items-center focus:outline-none">
+                        <span class="font-bold text-slate-800 text-sm sm:text-base">お見積りに費用は発生しますか？</span>
+                        <svg class="faq-arrow w-5 h-5 text-slate-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content hidden px-6 py-5 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white">
+                        基本的にお見積りは無料です。ただし、故障診断や調査のために特殊な足場や分解・配線経路追跡などの作業が生じる場合は、あらかじめ調査費についてご提示の上、ご相談させていただきます。勝手に追加費用を請求することはございません。
+                    </div>
+                </div>
+
+                <!-- 質問 3 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden transition">
+                    <button class="faq-btn w-full text-left px-6 py-5 bg-slate-50 hover:bg-slate-100/70 flex justify-between items-center focus:outline-none">
+                        <span class="font-bold text-slate-800 text-sm sm:text-base">他社で断られた特殊な工事や大規模インフラも対応できますか？</span>
+                        <svg class="faq-arrow w-5 h-5 text-slate-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content hidden px-6 py-5 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed bg-white">
+                        弊社は「一般建設業・電気工事業」の福岡県知事許可（第106370号）を取得しており、交通信号設備、避雷針、電気防食といった極めて専門的な電気工事に対応できる高度な資格・機材・知見を持っています。案件によっては最適なアプローチ方法や安全対策を交えて再提案が可能ですので、まずは状況をお聞かせください。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせ・フォーム -->
+    <section id="contact" class="py-20 md:py-28 bg-brand-dark text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <!-- Background design -->
+            <svg class="w-full h-full" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="40" stroke="white" stroke-width="0.5"/>
+                <circle cx="50" cy="50" r="20" stroke="white" stroke-width="0.5"/>
+            </svg>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- 電話・営業時間案内 -->
+                <div class="lg:col-span-5 space-y-6 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <span class="text-brand-accent font-bold text-sm tracking-wider uppercase">CONTACT US</span>
+                        <h2 class="text-3xl font-extrabold">お見積り・お問い合わせ</h2>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            電気に関わるお困り事、公共設備のご相談、新規工事のご計画など、どんなことでもお気軽にご連絡ください。<br>
+                            常時、有資格者が誠実にご説明・アドバイスをさせていただきます。
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 pt-6 border-t border-white/10">
+                        <div class="bg-white/5 p-5 rounded-2xl border border-white/10">
+                            <span class="block text-xs text-slate-400">お電話でのご相談はこちら</span>
+                            <a href="tel:092-404-2391" class="text-2xl sm:text-3xl font-black text-brand-accent tracking-wide hover:underline mt-1 block">
+                                092-404-2391
+                            </a>
+                            <p class="text-xs text-slate-400 mt-2">受付時間：平日 9:00 〜 17:00 （土日祝休み）</p>
+                        </div>
+                        <p class="text-xs text-slate-400">
+                            ※シミュレーターで作成したお伺い書をお手元に置いてお電話いただくと、よりスムーズなご案内が可能です。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- お問い合わせフォーム -->
+                <div class="lg:col-span-7 bg-white text-slate-800 p-6 sm:p-10 rounded-3xl shadow-2xl relative">
+                    <!-- フォーム送信完了状態表示 -->
+                    <div id="form-success-alert" class="hidden absolute inset-0 bg-white rounded-3xl flex flex-col items-center justify-center p-8 text-center space-y-4 z-20">
+                        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-brand-primary">お問い合わせを受け付けました</h3>
+                        <p class="text-slate-500 text-sm max-w-md mx-auto leading-relaxed">
+                            送信ありがとうございます。お送りいただいた内容は確認の上、通常2営業日以内（平日）にご入力の連絡先へご連絡差し上げます。お急ぎの場合は、直接お電話にてご連絡いただけますと幸いです。
+                        </p>
+                        <button onclick="resetContactForm()" class="mt-4 px-6 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+                            戻る
+                        </button>
+                    </div>
+
+                    <form id="contact-form" class="space-y-4">
+                        <h3 class="text-lg font-bold text-brand-primary border-b border-slate-100 pb-3">フォームでのお問い合わせ</h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1.5">お名前・会社名 <span class="text-rose-500">*</span></label>
+                                <input type="text" id="form-name" required placeholder="例：株式会社○○ / 須恵 太郎" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1.5">ご連絡先電話番号 <span class="text-rose-500">*</span></label>
+                                <input type="tel" id="form-phone" required placeholder="例：092-404-2391" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1.5">メールアドレス <span class="text-rose-500">*</span></label>
+                            <input type="email" id="form-email" required placeholder="例：sample@shinseitech.co.jp" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1.5">お問い合わせ内容 <span class="text-rose-500">*</span></label>
+                            <textarea id="form-message" required rows="5" placeholder="相談シミュレーターの内容や、お困りの症状をご記入ください。" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary transition"></textarea>
+                        </div>
+
+                        <div class="pt-2">
+                            <button type="submit" class="w-full bg-brand-secondary hover:bg-brand-primary text-white font-bold py-4 rounded-xl text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                                個人情報保護方針に同意して送信する
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                            </button>
+                            <span class="block text-center text-[10px] text-slate-400 mt-2.5">
+                                ※送信ボタンを押すとモックとして送信処理がテストされます。
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <!-- 社名ロゴ -->
+                <div class="text-center md:text-left space-y-1">
+                    <span class="text-xs text-brand-accent tracking-wider font-bold">一般建設業・電気工事業（福岡県知事許可 第106370号）</span>
+                    <h3 class="text-lg font-black text-white">株式会社シンセイテック</h3>
+                    <p class="text-[11px] text-slate-500">所在地：福岡県糟屋郡須惠町大字須恵1087番地1</p>
+                </div>
+
+                <!-- リンクリスト -->
+                <div class="flex flex-wrap justify-center gap-6 text-xs font-medium text-slate-400">
+                    <a href="#about" class="hover:text-white transition">私たちについて</a>
+                    <a href="#services" class="hover:text-white transition">対応工事案内</a>
+                    <a href="#calculator" class="hover:text-white transition">簡易相談窓口</a>
+                    <a href="#company" class="hover:text-white transition">会社概要</a>
+                </div>
+            </div>
+
+            <!-- コピーライト -->
+            <div class="mt-8 pt-6 border-t border-slate-800 text-center text-xs text-slate-500 flex flex-col sm:flex-row sm:justify-between gap-2">
+                <span>&copy; 2026 株式会社シンセイテック All Rights Reserved.</span>
+                <span class="text-[10px]">福岡県糟屋郡須惠町大字須恵1087番地1 | 法人番号 4290001039492</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS ロジック -->
+    <script>
+        // === 1. スクロールヘッダー効果 ===
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // === 2. モバイルナビゲーション開閉 ===
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconOpen = document.getElementById('menu-icon-open');
+        const menuIconClose = document.getElementById('menu-icon-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIconOpen.classList.add('hidden');
+                menuIconClose.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            }
+        });
+
+        // モバイルメニュークリック時にドロワーを閉じる
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            });
+        });
+
+        // === 3. 簡易見積り・相談シミュレーター ロジック ===
+        const selectedCategories = new Set();
+        const categoryTags = document.querySelectorAll('.calc-tag');
+        const scaleSelect = document.getElementById('calc-scale');
+        const outputTextarea = document.getElementById('calc-output');
+        const copySummaryBtn = document.getElementById('copy-summary-btn');
+
+        categoryTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                const value = tag.getAttribute('data-val');
+                if (selectedCategories.has(value)) {
+                    selectedCategories.delete(value);
+                    tag.classList.remove('border-brand-secondary', 'text-brand-secondary', 'bg-brand-secondary/5');
+                    tag.classList.add('border-slate-200', 'text-slate-600', 'bg-white');
+                } else {
+                    selectedCategories.add(value);
+                    tag.classList.remove('border-slate-200', 'text-slate-600', 'bg-white');
+                    tag.classList.add('border-brand-secondary', 'text-brand-secondary', 'bg-brand-secondary/5');
+                }
+                updateSummary();
+            });
+        });
+
+        scaleSelect.addEventListener('change', updateSummary);
+
+        function updateSummary() {
+            if (selectedCategories.size === 0) {
+                outputTextarea.value = "※ご希望の工事種別(ステップ1)を選択してください。";
+                return;
+            }
+
+            const catsArray = Array.from(selectedCategories);
+            const scaleVal = scaleSelect.value;
+            
+            const summary = `【電気工事に関する相談伺い書】
+■ご検討中の工事種別:
+${catsArray.map(c => `  - ${c}`).join('\n')}
+
+■対象となる建物/規模:
+  - ${scaleVal}
+
+■お問い合わせ内容の自動構成:
+  株式会社シンセイテック様
+  上記カテゴリに該当する、電気工事について相談を希望します。
+  具体的にはお見積り算出のための、詳細の確認や一度現地見学を希望します。
+  お手数ですが折り返しのご連絡をお待ちしております。`;
+
+            outputTextarea.value = summary;
+        }
+
+        // コピー機能 (navigator.clipboard 代替 document.execCommand 対策)
+        copySummaryBtn.addEventListener('click', () => {
+            if (selectedCategories.size === 0) {
+                alertToast("先に工事種別を選んでください。");
+                return;
+            }
+            outputTextarea.select();
+            document.execCommand('copy');
+            
+            // コピー完了ボタン表示フィードバック
+            const origText = copySummaryBtn.innerHTML;
+            copySummaryBtn.innerHTML = `
+                <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                コピーしました！
+            `;
+            setTimeout(() => {
+                copySummaryBtn.innerHTML = origText;
+            }, 2000);
+        });
+
+        // カスタムメッセージ表示（alertを避けるため）
+        function alertToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-lg shadow-lg text-xs font-bold transition-all transform translate-y-10 opacity-0";
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            
+            // アニメーション
+            setTimeout(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => toast.remove(), 500);
+            }, 2500);
+        }
+
+        // === 4. アコーディオン FAQ ロジック ===
+        const faqBtns = document.querySelectorAll('.faq-btn');
+        faqBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const arrow = btn.querySelector('.faq-arrow');
+                content.classList.toggle('hidden');
+                arrow.classList.toggle('rotate-180');
+            });
+        });
+
+        // === 5. お問い合わせフォーム送信シミュレート ===
+        const contactForm = document.getElementById('contact-form');
+        const formSuccessAlert = document.getElementById('form-success-alert');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // 送信アニメーションフィードバック
+            formSuccessAlert.classList.remove('hidden');
+        });
+
+        function resetContactForm() {
+            contactForm.reset();
+            formSuccessAlert.classList.add('hidden');
+        }
+
+        // === 6. Leaflet 地図初期化 (須惠町大字須恵1087-1周辺) ===
+        // 緯度経度は 須惠町大字須恵1087番地1 周辺 (約 33.5878, 130.5055)
+        window.addEventListener('load', () => {
+            try {
+                const map = L.map('company-map', {
+                    scrollWheelZoom: false // ページスクロールを邪魔しないようにホイールズームを初期無効化
+                }).setView([33.5878, 130.5055], 15);
+
+                // オープンストリートマップレイヤー
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                // マーカー
+                const marker = L.marker([33.5878, 130.5055]).addTo(map);
+                marker.bindPopup(`
+                    <div style="text-align: center;">
+                        <strong style="color: #1e3a8a; font-size:13px;">株式会社シンセイテック</strong><br>
+                        <span style="font-size:11px; color:#64748b;">福岡県糟屋郡須惠町大字須恵1087番地1</span>
+                    </div>
+                `).openPopup();
+                
+                // 地図がドラッグ可能であることを知らせる
+                map.on('focus', () => { map.scrollWheelZoom.enable(); });
+                map.on('blur', () => { map.scrollWheelZoom.disable(); });
+            } catch (e) {
+                console.error("Map initialization failed: ", e);
+            }
+        });
+    </script>
+</body>
+</html>
