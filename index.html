@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有限会社メープル | 北九州市門司区 of 建築・大工・内装仕上工事</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0B1E33',     /* 深みのある信頼のネイビー */
+                            gold: '#C5A880',     /* 木の温もりを感じるゴールドブラウン */
+                            goldDark: '#A88B62',
+                            lightBg: '#F9F8F6',  /* 柔らかいオフホワイト */
+                            darkText: '#2B2B2B', /* 読みやすいソフトブラック */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 極上のクリックフィードバック */
+        .click-trigger {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .click-trigger:active {
+            transform: scale(0.94) !important;
+            filter: brightness(0.85);
+        }
+        /* アクティブなメニューリンクの装飾 */
+        .nav-active {
+            color: #C5A880 !important;
+            border-bottom: 3px solid #C5A880;
+        }
+    </style>
+</head>
+<body class="font-sans text-brand-darkText bg-brand-lightBg selection:bg-brand-gold selection:text-white overflow-x-hidden min-h-screen flex flex-col">
+
+    <!-- 1. ヘッダー (NAVIGATION) -->
+    <header id="header" class="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 sm:h-24">
+                <!-- ロゴエリア（ホームに遷移） -->
+                <div onclick="window.navigateToPage('home')" class="flex items-center space-x-3 group cursor-pointer select-none click-trigger py-2">
+                    <div class="w-11 h-11 bg-brand-navy rounded-lg flex items-center justify-center text-brand-gold transition-colors duration-300 group-hover:bg-brand-gold group-hover:text-brand-navy shadow-md">
+                        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                            <path d="M12,2L2,12H5V21H19V12H22L12,2M12,5.5L17,10.5V19H7V10.5L12,5.5M12,8A2,2 0 0,0 10,10A2,2 0 0,0 12,12A2,2 0 0,0 14,10A2,2 0 0,0 12,8Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-xl sm:text-2xl font-black tracking-widest text-brand-navy flex items-center leading-none">
+                            MAPLE
+                        </div>
+                        <div class="text-[10px] text-gray-500 tracking-wider font-bold mt-1">有限会社メープル</div>
+                    </div>
+                </div>
+
+                <!-- PCナビゲーション (すべてのボタンにonclickによる画面遷移を確実に付与) -->
+                <nav class="hidden lg:flex space-x-2 text-sm font-bold tracking-wider h-full items-center">
+                    <button type="button" id="nav-home" onclick="window.navigateToPage('home')" class="nav-btn click-trigger text-brand-navy hover:text-brand-gold px-4 py-3 transition-all duration-200 text-center focus:outline-none h-full flex flex-col justify-center">
+                        ホーム
+                        <span class="block text-[9px] text-gray-400 font-normal uppercase">Home</span>
+                    </button>
+                    <button type="button" id="nav-strength" onclick="window.navigateToPage('strength')" class="nav-btn click-trigger text-brand-navy hover:text-brand-gold px-4 py-3 transition-all duration-200 text-center focus:outline-none h-full flex flex-col justify-center">
+                        強み
+                        <span class="block text-[9px] text-gray-400 font-normal uppercase">Strength</span>
+                    </button>
+                    <button type="button" id="nav-works" onclick="window.navigateToPage('works')" class="nav-btn click-trigger text-brand-navy hover:text-brand-gold px-4 py-3 transition-all duration-200 text-center focus:outline-none h-full flex flex-col justify-center">
+                        施工実績
+                        <span class="block text-[9px] text-gray-400 font-normal uppercase">Works</span>
+                    </button>
+                    <button type="button" id="nav-about" onclick="window.navigateToPage('about')" class="nav-btn click-trigger text-brand-navy hover:text-brand-gold px-4 py-3 transition-all duration-200 text-center focus:outline-none h-full flex flex-col justify-center">
+                        会社案内
+                        <span class="block text-[9px] text-gray-400 font-normal uppercase">Company</span>
+                    </button>
+                    <button type="button" id="nav-flow" onclick="window.navigateToPage('flow')" class="nav-btn click-trigger text-brand-navy hover:text-brand-gold px-4 py-3 transition-all duration-200 text-center focus:outline-none h-full flex flex-col justify-center">
+                        施工の流れ
+                        <span class="block text-[9px] text-gray-400 font-normal uppercase">Flow</span>
+                    </button>
+                </nav>
+
+                <!-- 右側お問い合わせ・電話 -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <div class="text-right">
+                        <div class="text-[10px] text-gray-400 font-bold">受付時間 8:00〜17:00 (日・祝除)</div>
+                        <a href="tel:0933815101" class="text-lg font-black text-brand-navy hover:text-brand-gold transition-colors click-trigger block"><i class="fa-solid fa-phone text-brand-gold mr-1"></i>093-381-5101</a>
+                    </div>
+                    <button type="button" onclick="window.navigateToPage('contact')" class="click-trigger bg-brand-navy hover:bg-brand-gold text-white hover:text-brand-navy px-5 py-3.5 rounded-lg text-sm font-bold tracking-wider flex items-center transition-all duration-300 shadow-md focus:outline-none">
+                        <i class="fa-regular fa-envelope mr-2 text-base"></i>お問い合わせ
+                    </button>
+                </div>
+
+                <!-- ハンバーガーメニューボタン (モバイル用) -->
+                <button type="button" id="mobile-menu-btn" class="lg:hidden p-3 rounded-lg text-brand-navy hover:text-brand-gold hover:bg-gray-100 focus:outline-none click-trigger" aria-label="メニューを開閉する">
+                    <svg class="h-8 w-8" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path id="hamburger-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- モバイルナビゲーションメニュー -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 py-6 px-6 shadow-inner">
+            <div class="flex flex-col space-y-3">
+                <button type="button" onclick="window.navigateToPage('home')" class="mobile-link text-left text-brand-navy hover:text-brand-gold hover:bg-gray-50 font-bold py-3 px-4 rounded-lg w-full focus:outline-none click-trigger">ホーム (Home)</button>
+                <button type="button" onclick="window.navigateToPage('strength')" class="mobile-link text-left text-brand-navy hover:text-brand-gold hover:bg-gray-50 font-bold py-3 px-4 rounded-lg w-full focus:outline-none click-trigger">強み (Our Strength)</button>
+                <button type="button" onclick="window.navigateToPage('works')" class="mobile-link text-left text-brand-navy hover:text-brand-gold hover:bg-gray-50 font-bold py-3 px-4 rounded-lg w-full focus:outline-none click-trigger">施工実績 (Works)</button>
+                <button type="button" onclick="window.navigateToPage('about')" class="mobile-link text-left text-brand-navy hover:text-brand-gold hover:bg-gray-50 font-bold py-3 px-4 rounded-lg w-full focus:outline-none click-trigger">会社案内 (Company)</button>
+                <button type="button" onclick="window.navigateToPage('flow')" class="mobile-link text-left text-brand-navy hover:text-brand-gold hover:bg-gray-50 font-bold py-3 px-4 rounded-lg w-full focus:outline-none click-trigger">施工の流れ (Flow)</button>
+                <button type="button" onclick="window.navigateToPage('contact')" class="mobile-link text-left text-brand-navy hover:text-brand-gold hover:bg-gray-50 font-bold py-3 px-4 rounded-lg w-full focus:outline-none click-trigger">お問い合わせ (Contact)</button>
+                
+                <div class="pt-6 text-center border-t border-gray-100">
+                    <div class="text-xs text-gray-500 mb-2 font-semibold">お電話でのお問い合わせ</div>
+                    <a href="tel:0933815101" class="text-2xl font-black text-brand-navy block click-trigger py-2"><i class="fa-solid fa-phone text-brand-gold mr-1"></i>093-381-5101</a>
+                    <p class="text-[10px] text-gray-400 mt-1">受付時間 8:00〜17:00 (日・祝除く)</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ領域（ヘッダー分の余白を追加） -->
+    <main class="flex-grow pt-20 sm:pt-24">
+
+        <!-- ==================== 🏠 ホームページ (PAGE: HOME) ==================== -->
+        <div id="page-home" class="page-section">
+            <section class="relative h-[85vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+                <!-- 背景画像 (id="hero-bg-img" を指定。初期画像として和モダン内観を設定) -->
+                <div class="absolute inset-0 z-0">
+                    <img id="hero-bg-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80" alt="高級木造住宅内観" class="w-full h-full object-cover object-center filter brightness-[0.7] transition-all duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-navy/60 via-transparent to-brand-navy/40"></div>
+                </div>
+
+                <!-- 管理者用：トップ画像変更用編集ボタン (初期は隠されており、管理者ログイン時に出現) -->
+                <button type="button" id="btn-edit-hero" onclick="window.openHeroModal()" class="hidden absolute top-6 right-6 z-20 click-trigger bg-blue-600 hover:bg-blue-700 text-white font-black text-xs px-4 py-3 rounded-lg flex items-center space-x-1.5 shadow-2xl transition focus:outline-none">
+                    <i class="fa-solid fa-image text-sm"></i>
+                    <span>トップ画像を変更</span>
+                </button>
+
+                <!-- コンテンツ -->
+                <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-white">
+                    <div class="max-w-2xl lg:max-w-3xl space-y-6 sm:space-y-8">
+                        <div class="inline-flex items-center space-x-2 bg-brand-gold/90 backdrop-blur-sm px-4 py-2 rounded-lg text-xs font-bold tracking-widest uppercase shadow-md">
+                            <span class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>
+                            <span>Building The Future With Reliable Technology</span>
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-wider leading-[1.25] sm:leading-[1.25]">
+                            確かな技術で、<br>
+                            <span class="text-brand-gold">未来をつくる。</span>
+                        </h1>
+                        
+                        <div class="space-y-2 border-l-4 border-brand-gold pl-4 sm:pl-6 text-gray-100">
+                            <p class="text-sm sm:text-base font-bold tracking-wide">建築工事・大工工事・内装仕上工事</p>
+                            <p class="text-base sm:text-lg font-extrabold tracking-widest text-white">福岡県北九州市門司区の建設会社 メープル</p>
+                        </div>
+
+                        <!-- ページ切り替えを誘発するナビゲーションボタン群 -->
+                        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                            <button type="button" onclick="window.navigateToPage('contact')" class="click-trigger bg-brand-gold hover:bg-brand-goldDark text-brand-navy hover:text-white px-8 py-4 rounded-xl text-base font-black tracking-wider flex items-center justify-center transition-all duration-300 shadow-lg group focus:outline-none">
+                                <i class="fa-regular fa-envelope mr-2.5 text-lg group-hover:scale-110 transition-transform"></i>お問い合わせはこちら
+                            </button>
+                            <button type="button" onclick="window.navigateToPage('works')" class="click-trigger bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border-2 border-white/45 px-8 py-4 rounded-xl text-base font-black tracking-wider flex items-center justify-center transition-all duration-300 shadow-md focus:outline-none">
+                                <i class="fa-solid fa-images mr-2.5 text-lg text-brand-gold"></i>施工実績を見る
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ホーム専用：簡単会社概要紹介エリア -->
+            <section class="py-16 bg-white border-t border-gray-100">
+                <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+                    <span class="text-brand-gold font-bold tracking-widest text-xs uppercase block">Welcome to MAPLE</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-navy">木のぬくもりを大切にした、確かな家づくり</h2>
+                    <p class="text-gray-600 text-sm sm:text-base leading-relaxed font-medium max-w-2xl mx-auto">
+                        有限会社メープルは、北九州市門司区にて新築住宅、各種リフォーム、大工工事、内装工事をお手伝いしています。確かな技術でお客様の想いをカタチにします。
+                    </p>
+                    <div class="pt-4 flex justify-center gap-4">
+                        <button type="button" onclick="window.navigateToPage('strength')" class="click-trigger bg-brand-navy text-white hover:bg-brand-gold hover:text-brand-navy px-6 py-3 rounded-lg font-bold text-sm transition focus:outline-none">メープルの強み</button>
+                        <button type="button" onclick="window.navigateToPage('about')" class="click-trigger border-2 border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white px-6 py-3 rounded-lg font-bold text-sm transition focus:outline-none">会社案内</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== ⭐ 強みページ (PAGE: STRENGTH) ==================== -->
+        <div id="page-strength" class="page-section hidden py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- セクションタイトル -->
+                <div class="text-center mb-12">
+                    <span class="text-brand-gold font-bold tracking-[0.2em] uppercase text-xs block mb-2">Our Strength</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-wider relative inline-block pb-3">
+                        私たちの強み
+                        <span class="absolute bottom-0 left-1/4 right-1/4 h-0.5 bg-brand-gold"></span>
+                    </h2>
+                </div>
+
+                <!-- 強みカードグリッド -->
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <!-- 強み1 -->
+                    <div class="bg-white rounded-xl p-8 shadow-md border-t-4 border-brand-gold text-center">
+                        <div class="w-16 h-16 bg-brand-lightBg rounded-full flex items-center justify-center text-brand-gold mx-auto mb-6 shadow-inner">
+                            <i class="fa-solid fa-hard-hat text-2.5xl"></i>
+                        </div>
+                        <h3 class="text-lg font-black text-brand-navy mb-3">確かな技術</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed font-medium">経験豊富な職人による高品質な施工を提供します。</p>
+                    </div>
+
+                    <!-- 強み2 -->
+                    <div class="bg-white rounded-xl p-8 shadow-md border-t-4 border-brand-gold text-center">
+                        <div class="w-16 h-16 bg-brand-lightBg rounded-full flex items-center justify-center text-brand-gold mx-auto mb-6 shadow-inner">
+                            <i class="fa-solid fa-hammer text-2.5xl"></i>
+                        </div>
+                        <h3 class="text-lg font-black text-brand-navy mb-3">幅広い対応</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed font-medium">建築工事・大工工事・内装仕上工事に幅広く対応。</p>
+                    </div>
+
+                    <!-- 強み3 -->
+                    <div class="bg-white rounded-xl p-8 shadow-md border-t-4 border-brand-gold text-center">
+                        <div class="w-16 h-16 bg-brand-lightBg rounded-full flex items-center justify-center text-brand-gold mx-auto mb-6 shadow-inner">
+                            <i class="fa-regular fa-face-smile text-2.5xl"></i>
+                        </div>
+                        <h3 class="text-lg font-black text-brand-navy mb-3">丁寧な対応</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed font-medium">お客様の想いを大切に、一つひとつ丁寧にカタチにします。</p>
+                    </div>
+
+                    <!-- 強み4 -->
+                    <div class="bg-white rounded-xl p-8 shadow-md border-t-4 border-brand-gold text-center">
+                        <div class="w-16 h-16 bg-brand-lightBg rounded-full flex items-center justify-center text-brand-gold mx-auto mb-6 shadow-inner">
+                            <i class="fa-solid fa-location-dot text-2.5xl"></i>
+                        </div>
+                        <h3 class="text-lg font-black text-brand-navy mb-3">地域密着</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed font-medium">北九州市門司区を中心に、迅速かつ柔軟に対応いたします。</p>
+                    </div>
+
+                    <!-- 強み5 -->
+                    <div class="bg-white rounded-xl p-8 shadow-md border-t-4 border-brand-gold text-center">
+                        <div class="w-16 h-16 bg-brand-lightBg rounded-full flex items-center justify-center text-brand-gold mx-auto mb-6 shadow-inner">
+                            <i class="fa-solid fa-shield-halved text-2.5xl"></i>
+                        </div>
+                        <h3 class="text-lg font-black text-brand-navy mb-3">安心・安全</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed font-medium">安全管理を徹底し、近隣にも配慮した現場づくりを約束します。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 🛠 施工実績ページ (PAGE: WORKS) ==================== -->
+        <div id="page-works" class="page-section hidden py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+                    
+                    <!-- 左側固定エリア -->
+                    <div class="space-y-6">
+                        <span class="text-brand-gold font-bold tracking-[0.2em] uppercase text-xs block">Our Works</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-wider">施工実績一覧</h2>
+                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base font-medium">
+                            一般住宅の新築から店舗リフォーム、こだわりを形にするオーダーメイドの大工工事まで、有限会社メープルが手がけた代表的な施工事例をご紹介します。
+                        </p>
+                        
+                        <!-- 管理者ダッシュボードトースト表示エリア -->
+                        <div id="admin-status-badge" class="hidden bg-red-50 border-2 border-red-200 rounded-xl p-4 space-y-2 shadow-inner">
+                            <div class="flex items-center text-red-800 text-xs font-black">
+                                <span class="w-3 h-3 rounded-full bg-red-600 animate-pulse mr-2"></span>
+                                管理者更新モード作動中
+                            </div>
+                            <p class="text-[11px] text-red-700 leading-relaxed font-bold">
+                                各実績画像の右上に「編集」「削除」ボタンが出現しています。直感的に更新が可能です。
+                            </p>
+                        </div>
+
+                        <div class="pt-4 flex flex-col gap-3">
+                            <button type="button" onclick="window.navigateToPage('contact')" class="click-trigger inline-flex items-center space-x-2 text-brand-navy font-black hover:text-brand-gold group text-left focus:outline-none text-base py-2">
+                                <span>施工について相談する</span>
+                                <i class="fa-solid fa-arrow-right group-hover:translate-x-1.5 transition-transform duration-200 text-brand-gold text-lg"></i>
+                            </button>
+                            <!-- 管理者用実績追加ボタン -->
+                            <button type="button" id="btn-add-work" onclick="window.openWorkModal()" class="hidden click-trigger w-full bg-red-600 hover:bg-red-700 text-white font-black text-base tracking-wider py-4 px-6 rounded-xl shadow-lg transition-all duration-300 items-center justify-center space-x-2 focus:outline-none">
+                                <i class="fa-solid fa-plus text-lg animate-bounce"></i>
+                                <span>新しい施工実績を追加</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 右側実績ギャラリー -->
+                    <div id="works-gallery-container" class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- JSにより動的レンダリング -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 🏢 会社案内ページ (PAGE: ABOUT) ==================== -->
+        <div id="page-about" class="page-section hidden py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <!-- 画像側 (管理者ログイン時に画像変更用ボタンを表示) -->
+                    <div class="relative">
+                        <div class="relative z-10 rounded-xl overflow-hidden shadow-2xl">
+                            <img id="about-bg-img" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80" alt="建築スケッチ・図面" class="w-full h-auto object-cover transition-all duration-700">
+                            
+                            <!-- 管理者用：会社案内画像変更ボタン (CSSをflex/hidden、動作をwindow.openAboutModal()にバインド修正) -->
+                            <button type="button" id="btn-edit-about" onclick="window.openAboutModal()" class="hidden absolute top-4 right-4 z-20 click-trigger bg-blue-600 hover:bg-blue-700 text-white font-black text-xs px-4 py-3 rounded-lg flex items-center space-x-1.5 shadow-2xl transition focus:outline-none">
+                                <i class="fa-solid fa-image text-sm"></i>
+                                <span>画像を編集</span>
+                            </button>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-brand-gold rounded-xl -z-10 hidden sm:block"></div>
+                    </div>
+
+                    <!-- テキスト & 会社情報側 -->
+                    <div class="space-y-8">
+                        <div>
+                            <span class="text-brand-gold font-bold tracking-[0.2em] uppercase text-xs block mb-2">About Us</span>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-wider">有限会社メープルについて</h2>
+                        </div>
+
+                        <p class="text-gray-600 leading-relaxed text-sm sm:text-base font-medium">
+                            私たちは、福岡県北九州市門司区を拠点とし、建築 of プロフェッショナルとして確かな技術と誠実な仕事をお約束する建設会社です。新築から各種リフォーム、繊細な大工工事、内装仕上工事まで自社でしっかりと手がけ、お客様に寄り添いながら「心から安心できる快適な空間」を創造し、お届けいたします。
+                        </p>
+
+                        <!-- 会社概要テーブル -->
+                        <div class="bg-white rounded-xl p-6 sm:p-8 shadow-md border border-gray-100">
+                            <h3 class="text-lg font-black text-brand-navy border-l-4 border-brand-gold pl-3 mb-6">会社概要</h3>
+                            <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-3 text-sm font-semibold">
+                                <div class="sm:col-span-1 text-gray-400">会社名</div>
+                                <div class="sm:col-span-2 text-brand-navy font-black">有限会社メープル</div>
+                                
+                                <div class="border-t border-gray-100 my-1 sm:col-span-3"></div>
+
+                                <div class="sm:col-span-1 text-gray-400">代表者</div>
+                                <div class="sm:col-span-2 text-brand-navy">平田 哲二</div>
+
+                                <div class="border-t border-gray-100 my-1 sm:col-span-3"></div>
+
+                                <div class="sm:col-span-1 text-gray-400">所在地</div>
+                                <div class="sm:col-span-2 text-brand-navy leading-relaxed">〒801-0811<br>福岡県北九州市門司区大字黒川691番70号</div>
+
+                                <div class="border-t border-gray-100 my-1 sm:col-span-3"></div>
+
+                                <div class="sm:col-span-1 text-gray-400">電話番号</div>
+                                <div class="sm:col-span-2 text-brand-navy font-black text-base">
+                                    <a href="tel:0933815101" class="text-brand-navy hover:text-brand-gold transition-colors click-trigger">093-381-5101</a>
+                                </div>
+
+                                <div class="border-t border-gray-100 my-1 sm:col-span-3"></div>
+
+                                <div class="sm:col-span-1 text-gray-400">資本金</div>
+                                <div class="sm:col-span-2 text-brand-navy">300万円</div>
+
+                                <div class="border-t border-gray-100 my-1 sm:col-span-3"></div>
+
+                                <div class="sm:col-span-1 text-gray-400">建設業許可</div>
+                                <div class="sm:col-span-2 text-brand-navy text-xs sm:text-sm">
+                                    福岡県知事許可 第034124号
+                                </div>
+
+                                <div class="border-t border-gray-100 my-1 sm:col-span-3"></div>
+
+                                <div class="sm:col-span-1 text-gray-400">許可業種</div>
+                                <div class="sm:col-span-2 text-brand-navy font-medium">
+                                    建築工事業、大工工事業、内装仕上工事業
+                                </div>
+
+                                <div class="border-t border-gray-100 my-1 sm:col-span-3"></div>
+
+                                <div class="sm:col-span-1 text-gray-400">法人番号</div>
+                                <div class="sm:col-span-2 text-brand-navy text-xs font-mono">8290802010103</div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 🛠 施工の流れページ (PAGE: FLOW) ==================== -->
+        <div id="page-flow" class="page-section hidden py-16 bg-brand-navy text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- セクションタイトル -->
+                <div class="text-center mb-12">
+                    <span class="text-brand-gold font-bold tracking-[0.2em] uppercase text-xs block mb-2">Flow</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-wider relative inline-block pb-3">
+                        施工の流れ
+                        <span class="absolute bottom-0 left-1/4 right-1/4 h-0.5 bg-brand-gold"></span>
+                    </h2>
+                </div>
+
+                <!-- ステップリスト -->
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8 relative">
+                    <!-- 補助ライン(PC) -->
+                    <div class="hidden lg:block absolute top-[44px] left-[5%] right-[5%] h-0.5 bg-gradient-to-r from-brand-gold/10 via-brand-gold to-brand-gold/10 z-0"></div>
+
+                    <!-- ステップ1 -->
+                    <div class="flex flex-col items-center text-center relative z-10 group">
+                        <div class="w-16 h-16 rounded-full bg-brand-navy border-2 border-brand-gold flex items-center justify-center text-brand-gold font-black text-lg mb-4 group-hover:bg-brand-gold group-hover:text-brand-navy transition-all duration-300 shadow-md">
+                            01
+                        </div>
+                        <h3 class="text-base font-black tracking-wider mb-2">ご相談・ご要望</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed max-w-[200px] font-medium">お客様のご希望やご予算などを丁寧にお伺いいたします。</p>
+                    </div>
+
+                    <!-- ステップ2 -->
+                    <div class="flex flex-col items-center text-center relative z-10 group" style="transition-delay: 100ms;">
+                        <div class="w-16 h-16 rounded-full bg-brand-navy border-2 border-brand-gold flex items-center justify-center text-brand-gold font-black text-lg mb-4 group-hover:bg-brand-gold group-hover:text-brand-navy transition-all duration-300 shadow-md">
+                            02
+                        </div>
+                        <h3 class="text-base font-black tracking-wider mb-2">現地調査</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed max-w-[200px] font-medium">状況を正確に把握するため、現地確認を行います。</p>
+                    </div>
+
+                    <!-- ステップ3 -->
+                    <div class="flex flex-col items-center text-center relative z-10 group" style="transition-delay: 200ms;">
+                        <div class="w-16 h-16 rounded-full bg-brand-navy border-2 border-brand-gold flex items-center justify-center text-brand-gold font-black text-lg mb-4 group-hover:bg-brand-gold group-hover:text-brand-navy transition-all duration-300 shadow-md">
+                            03
+                        </div>
+                        <h3 class="text-base font-black tracking-wider mb-2">見積・ご提案</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed max-w-[200px] font-medium">ご要望をもとに作成したプランとお見積りを提示します。</p>
+                    </div>
+
+                    <!-- ステップ4 -->
+                    <div class="flex flex-col items-center text-center relative z-10 group" style="transition-delay: 300ms;">
+                        <div class="w-16 h-16 rounded-full bg-brand-navy border-2 border-brand-gold flex items-center justify-center text-brand-gold font-black text-lg mb-4 group-hover:bg-brand-gold group-hover:text-brand-navy transition-all duration-300 shadow-md">
+                            04
+                        </div>
+                        <h3 class="text-base font-black tracking-wider mb-2">ご契約・着工</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed max-w-[200px] font-medium">計画にご納得いただいたうえでご契約となり、工事を開始します。</p>
+                    </div>
+
+                    <!-- ステップ5 -->
+                    <div class="flex flex-col items-center text-center relative z-10 group" style="transition-delay: 400ms;">
+                        <div class="w-16 h-16 rounded-full bg-brand-navy border-2 border-brand-gold flex items-center justify-center text-brand-gold font-black text-lg mb-4 group-hover:bg-brand-gold group-hover:text-brand-navy transition-all duration-300 shadow-md">
+                            05
+                        </div>
+                        <h3 class="text-base font-black tracking-wider mb-2">施工・管理</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed max-w-[200px] font-medium">経験豊富な職人が安全第一で丁寧に施工いたします。</p>
+                    </div>
+
+                    <!-- ステップ6 -->
+                    <div class="flex flex-col items-center text-center relative z-10 group" style="transition-delay: 500ms;">
+                        <div class="w-16 h-16 rounded-full bg-brand-navy border-2 border-brand-gold flex items-center justify-center text-brand-gold font-black text-lg mb-4 group-hover:bg-brand-gold group-hover:text-brand-navy transition-all duration-300 shadow-md">
+                            06
+                        </div>
+                        <h3 class="text-base font-black tracking-wider mb-2">お引き渡し</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed max-w-[200px] font-medium">厳格な仕上がり検査後、安心の引き渡し。アフターもサポートします。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ✉️ お問い合わせページ (PAGE: CONTACT) ==================== -->
+        <div id="page-contact" class="page-section hidden py-16 bg-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- セクションタイトル -->
+                <div class="text-center mb-12">
+                    <span class="text-brand-gold font-bold tracking-[0.2em] uppercase text-xs block mb-2">Contact</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-wider">お問い合わせ</h2>
+                    <p class="text-gray-500 text-sm mt-3 font-semibold">新築・リフォーム・各種施工に関するご質問、お見積りのご依頼などお気軽にご相談ください。</p>
+                </div>
+
+                <!-- 電話誘導エリア -->
+                <div class="bg-brand-lightBg rounded-2xl p-6 sm:p-10 mb-12 flex flex-col md:flex-row items-center justify-between shadow-sm border border-gray-100">
+                    <div class="mb-6 md:mb-0 text-center md:text-left">
+                        <h3 class="text-xl font-black text-brand-navy mb-1.5"><i class="fa-solid fa-phone text-brand-gold mr-2"></i>お電話でのご相談はこちら</h3>
+                        <p class="text-xs text-gray-500 font-bold">お急ぎの場合や直接話したい場合はこちらよりご連絡ください。</p>
+                    </div>
+                    <div class="text-center md:text-right">
+                        <a href="tel:0933815101" class="text-3xl sm:text-4xl font-black text-brand-navy hover:text-brand-gold transition-colors duration-200 click-trigger inline-block py-1">093-381-5101</a>
+                        <p class="text-[11px] text-gray-400 mt-1 font-semibold">受付時間 8:00〜17:00 (日・祝除く)</p>
+                    </div>
+                </div>
+
+                <!-- メールフォーム -->
+                <form id="contact-form" class="space-y-6 bg-white p-6 sm:p-10 rounded-2xl border-2 border-gray-100 shadow-lg">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-bold text-brand-navy mb-2">お名前 <span class="text-red-500 text-xs font-black">*必須</span></label>
+                            <input type="text" id="name" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm font-medium">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-bold text-brand-navy mb-2">電話番号 <span class="text-red-500 text-xs font-black">*必須</span></label>
+                            <input type="tel" id="phone" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm font-medium">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-bold text-brand-navy mb-2">メールアドレス <span class="text-red-500 text-xs font-black">*必須</span></label>
+                        <input type="email" id="email" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm font-medium">
+                    </div>
+
+                    <div>
+                        <label for="subject" class="block text-sm font-bold text-brand-navy mb-2">お問い合わせ内容の種別</label>
+                        <select id="subject" class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm bg-white font-bold text-brand-navy">
+                            <option value="新築工事について">新築工事について</option>
+                            <option value="リフォームについて">リフォームについて</option>
+                            <option value="大工・内装工事について">大工・内装工事について</option>
+                            <option value="その他のお問い合わせ">その他のお問い合わせ</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-bold text-brand-navy mb-2">メッセージ本文 <span class="text-red-500 text-xs font-black">*必須</span></label>
+                        <textarea id="message" rows="5" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm font-medium"></textarea>
+                    </div>
+
+                    <div class="text-center pt-4">
+                        <button type="submit" class="click-trigger w-full sm:w-auto bg-brand-navy hover:bg-brand-gold text-white hover:text-brand-navy font-black tracking-widest px-12 py-4.5 rounded-xl transition-all duration-300 shadow-md focus:outline-none">
+                            この内容で送信する
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 8. フッター (FOOTER - 画面遷移を安全に行う構造) -->
+    <footer class="bg-brand-navy text-white pt-16 pb-8 border-t border-white/10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
+                <!-- 左側 -->
+                <div class="space-y-6">
+                    <div onclick="window.navigateToPage('home')" class="flex items-center space-x-3 cursor-pointer select-none click-trigger">
+                        <div class="w-10 h-10 bg-brand-gold rounded-lg flex items-center justify-center text-brand-navy animate-pulse">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                                <path d="M12,2L2,12H5V21H19V12H22L12,2M12,5.5L17,10.5V19H7V10.5L12,5.5M12,8A2,2 0 0,0 10,10A2,2 0 0,0 12,12A2,2 0 0,0 14,10A2,2 0 0,0 12,8Z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold tracking-widest text-white">MAPLE</div>
+                            <div class="text-xs text-gray-400 -mt-1 font-semibold">有限会社メープル</div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed font-medium">
+                        〒801-0811<br>
+                        福岡県北九州市門司区大字黒川691番70号<br>
+                        TEL: 093-381-5101
+                    </p>
+                </div>
+
+                <!-- 中央 -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="text-sm font-black text-brand-gold border-b-2 border-brand-gold/30 pb-2 mb-4 tracking-wider">コンテンツ</h4>
+                        <ul class="space-y-2 text-xs font-bold text-gray-300">
+                            <li><button type="button" onclick="window.navigateToPage('home')" class="click-trigger text-left hover:text-brand-gold transition-colors w-full focus:outline-none py-1">ホーム</button></li>
+                            <li><button type="button" onclick="window.navigateToPage('strength')" class="click-trigger text-left hover:text-brand-gold transition-colors w-full focus:outline-none py-1">私たちの強み</button></li>
+                            <li><button type="button" onclick="window.navigateToPage('works')" class="click-trigger text-left hover:text-brand-gold transition-colors w-full focus:outline-none py-1">施工実績</button></li>
+                            <li><button type="button" onclick="window.navigateToPage('about')" class="click-trigger text-left hover:text-brand-gold transition-colors w-full focus:outline-none py-1">会社案内</button></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black text-brand-gold border-b-2 border-brand-gold/30 pb-2 mb-4 tracking-wider">サポート</h4>
+                        <ul class="space-y-2 text-xs font-bold text-gray-300">
+                            <li><button type="button" onclick="window.navigateToPage('flow')" class="click-trigger text-left hover:text-brand-gold transition-colors w-full focus:outline-none py-1">施工の流れ</button></li>
+                            <li><button type="button" onclick="window.navigateToPage('contact')" class="click-trigger text-left hover:text-brand-gold transition-colors w-full focus:outline-none py-1">お問い合わせ</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 右側 -->
+                <div class="space-y-6">
+                    <h4 class="text-sm font-black text-brand-gold border-b-2 border-brand-gold/30 pb-2 mb-4 tracking-wider">ご相談窓口</h4>
+                    <div class="space-y-2">
+                        <p class="text-xs text-gray-400 font-semibold">お電話で直接相談する（受付 8:00〜17:00）</p>
+                        <a href="tel:0933815101" class="text-2xl font-black text-white hover:text-brand-gold transition-colors block click-trigger"><i class="fa-solid fa-phone text-brand-gold mr-2 text-lg"></i>093-381-5101</a>
+                    </div>
+                    <div>
+                        <button type="button" onclick="window.navigateToPage('contact')" class="click-trigger w-full bg-brand-gold hover:bg-brand-goldDark text-brand-navy hover:text-white text-center py-3.5 rounded-xl text-xs font-black tracking-widest block transition-all duration-300 shadow-md focus:outline-none">
+                            <i class="fa-regular fa-envelope mr-1.5"></i>WEBから相談する
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- コピーライト & 🔐 管理者ログイン (確実にパスワード画面を開くhandleAdminClickに修正) -->
+            <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-[11px] text-gray-400 tracking-wider text-center sm:text-left font-semibold">© MAPLE Co., Ltd. All Rights Reserved.</p>
+                <div class="flex items-center space-x-2">
+                    <div id="btn-admin-login" onclick="window.handleAdminClick()" class="click-trigger cursor-pointer text-gray-400 hover:text-brand-gold text-xs flex items-center space-x-1.5 transition-colors select-none py-2 px-3 bg-white/5 rounded-lg border border-white/10 font-bold">
+                        <i id="admin-icon" class="fa-solid fa-lock text-[10px]"></i>
+                        <span id="admin-login-text">管理者ログイン</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== ページトップへ戻る JUMPボタン ==================== -->
+    <button id="pagetop-btn" onclick="window.scrollToTop()" class="fixed bottom-6 right-6 z-40 bg-brand-gold hover:bg-brand-goldDark text-brand-navy hover:text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 translate-y-10 pointer-events-none focus:outline-none click-trigger" aria-label="ページトップへ戻る">
+        <i class="fa-solid fa-arrow-up text-xl"></i>
+    </button>
+
+    <!-- ==================== ポップアップ用モーダル (施工実績ライトボックス) ==================== -->
+    <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4 transition-all duration-300" onclick="window.closeLightbox()">
+        <button onclick="window.closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-gold text-3xl focus:outline-none click-trigger" aria-label="閉じる">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="max-w-4xl w-full bg-white rounded-xl overflow-hidden shadow-2xl" id="lightbox-card" onclick="event.stopPropagation()">
+            <div class="aspect-video w-full overflow-hidden bg-gray-900">
+                <img id="lightbox-img" src="" alt="拡大画像" class="w-full h-full object-cover">
+            </div>
+            <div class="p-6 sm:p-8 bg-white">
+                <span class="text-brand-gold text-xs font-bold tracking-widest uppercase mb-1 block">MAPLE WORKS EXCELLENCE</span>
+                <h3 id="lightbox-title" class="text-xl sm:text-2xl font-black text-brand-navy tracking-wider mb-2"></h3>
+                <p id="lightbox-desc" class="text-sm text-gray-600 leading-relaxed font-semibold"></p>
+                <div class="mt-6 flex justify-end">
+                    <button onclick="window.closeLightbox()" class="bg-brand-navy hover:bg-brand-gold text-white hover:text-brand-navy font-black text-xs tracking-widest px-6 py-3 rounded-lg transition click-trigger focus:outline-none">
+                        閉じる
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 🔐 セキュリティ管理者ログインモーダル ==================== -->
+    <div id="login-modal" class="fixed inset-0 bg-black/75 z-50 hidden items-center justify-center p-4" onclick="window.closeLoginModal()">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 sm:p-8 shadow-2xl relative" id="login-modal-card" onclick="event.stopPropagation()">
+            <button onclick="window.closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-navy transition focus:outline-none click-trigger">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center text-brand-gold mx-auto mb-3 shadow-inner">
+                    <i class="fa-solid fa-shield-halved text-xl"></i>
+                </div>
+                <h3 class="text-lg font-black text-brand-navy">管理者セキュリティ認証</h3>
+                <p class="text-xs text-gray-400 mt-1">実績更新用の初期パスワードは「maple2026」です</p>
+            </div>
+            <form id="login-form" onsubmit="window.handleLoginSubmit(event)" class="space-y-4">
+                <div>
+                    <label for="admin-password" class="block text-xs font-bold text-brand-navy mb-1.5">セキュリティパスワード</label>
+                    <input type="password" id="admin-password" required placeholder="••••••••" class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm">
+                </div>
+                <div id="login-error-msg" class="text-red-500 text-xs hidden font-bold">パスワードが正しくありません。</div>
+                <button type="submit" class="click-trigger w-full bg-brand-navy hover:bg-brand-gold text-white hover:text-brand-navy font-black tracking-widest py-3 rounded-xl text-xs transition focus:outline-none">
+                    認証してロック解除
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== 🛠 施工実績 追加・編集用管理モーダル ==================== -->
+    <div id="work-modal" class="fixed inset-0 bg-black/75 z-50 hidden items-center justify-center p-4 overflow-y-auto" onclick="window.closeWorkModal()">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative my-8" id="work-modal-card" onclick="event.stopPropagation()">
+            <button onclick="window.closeWorkModal()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-navy transition focus:outline-none click-trigger">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="mb-6">
+                <h3 id="work-modal-title" class="text-xl font-black text-brand-navy border-l-4 border-brand-gold pl-3">新規実績の登録</h3>
+                <p class="text-xs text-gray-400 mt-1">安全対策(XSS対策)によりHTMLタグ等は自動で無害化されます。</p>
+            </div>
+            
+            <form id="work-form" onsubmit="window.handleWorkSave(event)" class="space-y-5">
+                <input type="hidden" id="edit-work-id" value="">
+                
+                <div>
+                    <label for="work-name" class="block text-sm font-bold text-brand-navy mb-1.5">実績名 <span class="text-red-500 text-xs font-black">*</span></label>
+                    <input type="text" id="work-name" required placeholder="例：内装仕上工事 (カフェバー新装)" class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm font-semibold text-brand-navy">
+                </div>
+
+                <div>
+                    <label for="work-category" class="block text-sm font-bold text-brand-navy mb-1.5">施工カテゴリー <span class="text-red-500 text-xs font-black">*</span></label>
+                    <select id="work-category" required class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm bg-white font-bold text-brand-navy">
+                        <option value="New Construction">新築工事 (一般住宅)</option>
+                        <option value="Renovation">リフォーム工事 (戸建て)</option>
+                        <option value="Carpentry">大工工事 (新築・木造)</option>
+                        <option value="Interior Work">内装工事 (店舗・カフェ)</option>
+                        <option value="Finishing Work">内装仕上工事 (テナント)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="work-desc" class="block text-sm font-bold text-brand-navy mb-1.5">詳細説明文 <span class="text-red-500 text-xs font-black">*</span></label>
+                    <textarea id="work-desc" rows="3" required placeholder="施工のこだわりや概要を入力してください。" class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm font-medium"></textarea>
+                </div>
+
+                <!-- プリセット画像 -->
+                <div>
+                    <label class="block text-sm font-bold text-brand-navy mb-1.5">施工画像の設定 <span class="text-red-500 text-xs font-black">*</span></label>
+                    <div class="grid grid-cols-5 gap-2 mb-3">
+                        <button type="button" onclick="window.setPresetImage(0)" class="preset-img-btn border-2 border-brand-gold rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><span class="text-[9px] text-white">新築</span></div>
+                        </button>
+                        <button type="button" onclick="window.setPresetImage(1)" class="preset-img-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><span class="text-[9px] text-white">リフォーム</span></div>
+                        </button>
+                        <button type="button" onclick="window.setPresetImage(2)" class="preset-img-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><span class="text-[9px] text-white">大工</span></div>
+                        </button>
+                        <button type="button" onclick="window.setPresetImage(3)" class="preset-img-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><span class="text-[9px] text-white">カフェ内装</span></div>
+                        </button>
+                        <button type="button" onclick="window.setPresetImage(4)" class="preset-img-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><span class="text-[9px] text-white">仕上店舗</span></div>
+                        </button>
+                    </div>
+                    <input type="url" id="work-image-url" required placeholder="またはカスタム画像URLを入力してください" class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm">
+                </div>
+
+                <div class="flex space-x-3 pt-2">
+                    <button type="button" onclick="window.closeWorkModal()" class="click-trigger w-1/2 border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3.5 rounded-xl text-sm transition focus:outline-none">
+                        キャンセル
+                    </button>
+                    <button type="submit" class="click-trigger w-1/2 bg-brand-navy hover:bg-brand-gold text-white hover:text-brand-navy font-black py-3.5 rounded-xl text-sm transition shadow-md focus:outline-none">
+                        登録・保存する
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== 🖼 トップ画像変更用管理モーダル ==================== -->
+    <div id="hero-modal" class="fixed inset-0 bg-black/75 z-50 hidden items-center justify-center p-4 overflow-y-auto" onclick="window.closeHeroModal()">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative my-8" id="hero-modal-card" onclick="event.stopPropagation()">
+            <button type="button" onclick="window.closeHeroModal()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-navy transition focus:outline-none click-trigger">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="mb-6">
+                <h3 class="text-xl font-black text-brand-navy border-l-4 border-brand-gold pl-3">トップ画像の編集</h3>
+                <p class="text-xs text-gray-400 mt-1">トップページのメインビジュアル（背景画像）を変更します。</p>
+            </div>
+            
+            <form id="hero-form" onsubmit="window.handleHeroSave(event)" class="space-y-5">
+                <!-- デザイナー厳選トップ用プリセット画像 -->
+                <div>
+                    <label class="block text-sm font-bold text-brand-navy mb-2">おすすめの背景画像から選ぶ</label>
+                    <div class="grid grid-cols-5 gap-2 mb-3">
+                        <button type="button" onclick="window.setPresetHeroImage(0)" class="preset-hero-btn border-2 border-brand-gold rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="和モダン内観">
+                        </button>
+                        <button type="button" onclick="window.setPresetHeroImage(1)" class="preset-hero-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="上質な外観">
+                        </button>
+                        <button type="button" onclick="window.setPresetHeroImage(2)" class="preset-hero-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="明るいリビング">
+                        </button>
+                        <button type="button" onclick="window.setPresetHeroImage(3)" class="preset-hero-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="木目の美しい空間">
+                        </button>
+                        <button type="button" onclick="window.setPresetHeroImage(4)" class="preset-hero-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="夜の外観">
+                        </button>
+                    </div>
+                    <div class="mt-4">
+                        <label for="hero-image-url" class="block text-sm font-bold text-brand-navy mb-1.5">または独自の画像URLを入力</label>
+                        <input type="url" id="hero-image-url" required placeholder="https://..." class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm">
+                    </div>
+                </div>
+
+                <div class="flex space-x-3 pt-2">
+                    <button type="button" onclick="window.closeHeroModal()" class="click-trigger w-1/2 border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3.5 rounded-xl text-sm transition focus:outline-none">
+                        キャンセル
+                    </button>
+                    <button type="submit" class="click-trigger w-1/2 bg-brand-navy hover:bg-brand-gold text-white hover:text-brand-navy font-black py-3.5 rounded-xl text-sm transition shadow-md focus:outline-none">
+                        画像を適用する
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== 🏢 会社案内画像変更用管理モーダル (新設) ==================== -->
+    <div id="about-modal" class="fixed inset-0 bg-black/75 z-50 hidden items-center justify-center p-4 overflow-y-auto" onclick="window.closeAboutModal()">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative my-8" id="about-modal-card" onclick="event.stopPropagation()">
+            <button type="button" onclick="window.closeAboutModal()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-navy transition focus:outline-none click-trigger">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="mb-6">
+                <h3 class="text-xl font-black text-brand-navy border-l-4 border-brand-gold pl-3">会社案内画像の編集</h3>
+                <p class="text-xs text-gray-400 mt-1">会社案内（About Us）ページのイメージ写真を変更します。</p>
+            </div>
+            
+            <form id="about-form" onsubmit="window.handleAboutSave(event)" class="space-y-5">
+                <!-- デザイナー厳選 会社案内用プリセット画像 -->
+                <div>
+                    <label class="block text-sm font-bold text-brand-navy mb-2">おすすめの画像から選ぶ</label>
+                    <div class="grid grid-cols-5 gap-2 mb-3">
+                        <button type="button" onclick="window.setPresetAboutImage(0)" class="preset-about-btn border-2 border-brand-gold rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="建築図面とスケッチ">
+                        </button>
+                        <button type="button" onclick="window.setPresetAboutImage(1)" class="preset-about-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="大工作業現場">
+                        </button>
+                        <button type="button" onclick="window.setPresetAboutImage(2)" class="preset-about-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7eed?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="設計打ち合わせ">
+                        </button>
+                        <button type="button" onclick="window.setPresetAboutImage(3)" class="preset-about-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="モダンなオフィス内観">
+                        </button>
+                        <button type="button" onclick="window.setPresetAboutImage(4)" class="preset-about-btn border-2 border-transparent rounded-lg overflow-hidden aspect-video relative group focus:outline-none click-trigger">
+                            <img src="https://images.unsplash.com/photo-1429490354685-6c2b1a80c98d?auto=format&fit=crop&w=120&q=50" class="w-full h-full object-cover" alt="大工道具・木目">
+                        </button>
+                    </div>
+                    <div class="mt-4">
+                        <label for="about-image-url" class="block text-sm font-bold text-brand-navy mb-1.5">または独自の画像URLを入力</label>
+                        <input type="url" id="about-image-url" required placeholder="https://..." class="w-full px-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none transition text-sm">
+                    </div>
+                </div>
+
+                <div class="flex space-x-3 pt-2">
+                    <button type="button" onclick="window.closeAboutModal()" class="click-trigger w-1/2 border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3.5 rounded-xl text-sm transition focus:outline-none">
+                        キャンセル
+                    </button>
+                    <button type="submit" class="click-trigger w-1/2 bg-brand-navy hover:bg-brand-gold text-white hover:text-brand-navy font-black py-3.5 rounded-xl text-sm transition shadow-md focus:outline-none">
+                        画像を適用する
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== 送信完了モーダル ==================== -->
+    <div id="success-modal" class="fixed inset-0 bg-black/75 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 text-center shadow-2xl relative" id="success-modal-card">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-green-500 mx-auto mb-6 shadow-inner animate-bounce">
+                <i class="fa-solid fa-check text-3xl"></i>
+            </div>
+            <h3 class="text-2xl font-black text-brand-navy tracking-wider mb-4">送信が完了しました</h3>
+            <p class="text-sm text-gray-600 leading-relaxed mb-6 font-semibold">
+                お問い合わせいただき誠にありがとうございます。<br>
+                内容を確認の上、担当者より2〜3営業日以内にご連絡させていただきます。
+            </p>
+            <button onclick="window.closeSuccessModal()" class="click-trigger w-full bg-brand-navy hover:bg-brand-gold text-white hover:text-brand-navy font-black tracking-widest py-4 rounded-xl transition-all duration-300 focus:outline-none shadow-md">
+                閉じる
+            </button>
+        </div>
+    </div>
+
+
+    <!-- ==================== JavaScript ==================== -->
+    <script>
+        // --- ⚙️ 完全画面（ページ）切り替え型 SPA スクリプト ---
+        
+        // 管理者状態
+        let isAdminLoggedIn = false;
+
+        // 施工実績データベース
+        window.worksData = [
+            {
+                id: "work-1",
+                category: "New Construction",
+                categoryLabel: "新築工事 (一般住宅)",
+                title: "新築工事 (一般住宅)",
+                desc: "一から創り上げる理想のマイホーム。施主様のこだわりを詰め込んだ上質な木造注文住宅です。",
+                img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+                isLarge: true
+            },
+            {
+                id: "work-2",
+                category: "Renovation",
+                categoryLabel: "リフォーム工事 (戸建て)",
+                title: "リフォーム工事 (戸建て)",
+                desc: "ライフスタイルに合わせた部分改修から全面リノベーションまで、空間の価値を最大まで高める施工。",
+                img: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80",
+                isLarge: false
+            },
+            {
+                id: "work-3",
+                category: "Carpentry",
+                categoryLabel: "大工工事 (新築)",
+                title: "大工工事 (新築)",
+                desc: "木造建築 of 構造を支える熟練職人の技。木の特性を極限まで活かした頑丈な骨組みを作ります。",
+                img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
+                isLarge: false
+            },
+            {
+                id: "work-4",
+                category: "Interior Work",
+                categoryLabel: "内装工事 (カフェ)",
+                title: "内装工事 (カフェ)",
+                desc: "こだわりのおしゃれな商用空間デザイン。動線設計から照明計画まで徹底的なトータルプロデュース。",
+                img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80",
+                isLarge: false
+            },
+            {
+                id: "work-5",
+                category: "Finishing Work",
+                categoryLabel: "内装仕上工事 (店舗)",
+                title: "内装仕上工事 (店舗)",
+                desc: "美しさと機能性を徹底追求。最高級の仕上げが空間全体の魅力をさらに大きく引き立てます。",
+                img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80",
+                isLarge: false
+            }
+        ];
+
+        // 厳選プリセット画像 (施工実績用)
+        window.presetImages = [
+            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+        ];
+
+        // 厳選プリセット画像 (トップメインビジュアル背景用 - 高解像度)
+        window.presetHeroImages = [
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80", // 和モダン内観
+            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80", // 上質な外観
+            "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1920&q=80", // 明るいリビング
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80", // 木目の美しい空間
+            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80"  // 夜の外観
+        ];
+
+        // 厳選プリセット画像 (会社案内用 - 設計・打ち合わせ・プロ現場の温かみ)
+        window.presetAboutImages = [
+            "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80", // 建築図面とスケッチ
+            "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80", // 大工作業現場
+            "https://images.unsplash.com/photo-1581094288338-2314dddb7eed?auto=format&fit=crop&w=800&q=80", // 設計打ち合わせ
+            "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80", // モダンなオフィス内観
+            "https://images.unsplash.com/photo-1429490354685-6c2b1a80c98d?auto=format&fit=crop&w=800&q=80"  // 大工道具・木目
+        ];
+
+        // 🛡 XSSセキュリティ無害化処理
+        function sanitizeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+
+        // 🚀 ページ遷移関数（すべてのhiddenを操作して目的のページのみをパッと100%描画）
+        window.navigateToPage = function(pageId) {
+            // すべてのページセクションを非表示にする
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // 目的のページを表示する
+            const targetSection = document.getElementById('page-' + pageId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            }
+
+            // ヘッダーナビゲーションのアクティブクラスの付け替え
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('nav-active');
+            });
+            const activeNav = document.getElementById('nav-' + pageId);
+            if (activeNav) {
+                activeNav.classList.add('nav-active');
+            }
+
+            // モバイルメニューを閉じる
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerPath = document.getElementById('hamburger-path');
+            if (mobileMenu) mobileMenu.classList.add('hidden');
+            if (hamburgerPath) hamburgerPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+
+            // ページ最上部に戻す
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        };
+
+        // トップへ戻る
+        window.scrollToTop = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // 🔐 管理者・セキュリティ更新フローのハンドリング
+        window.handleAdminClick = function() {
+            if (isAdminLoggedIn) {
+                // ログイン済みの場合はログアウト処理を実行
+                isAdminLoggedIn = false;
+                window.applyAdminState();
+            } else {
+                // 未ログインの場合は、必ずパスワードモーダルを立ち上げる
+                window.openLoginModal();
+            }
+        };
+
+        // 管理者状態をUIに適用する統合関数（デモ・パスワード検証の両方から呼び出されます）
+        window.applyAdminState = function() {
+            const adminStatusBadge = document.getElementById('admin-status-badge');
+            const btnAddWork = document.getElementById('btn-add-work');
+            const btnEditHero = document.getElementById('btn-edit-hero');
+            const btnEditAbout = document.getElementById('btn-edit-about');
+            const adminLoginText = document.getElementById('admin-login-text');
+            const adminIcon = document.getElementById('admin-icon');
+
+            if (isAdminLoggedIn) {
+                adminStatusBadge?.classList.remove('hidden');
+                if (btnAddWork) {
+                    btnAddWork.classList.remove('hidden');
+                    btnAddWork.classList.add('flex');
+                }
+                if (btnEditHero) {
+                    btnEditHero.classList.remove('hidden');
+                    btnEditHero.classList.add('flex');
+                }
+                if (btnEditAbout) {
+                    btnEditAbout.classList.remove('hidden');
+                    btnEditAbout.classList.add('flex');
+                }
+                if (adminLoginText) adminLoginText.textContent = "管理者ログアウト";
+                if (adminIcon) adminIcon.className = "fa-solid fa-lock-open text-[10px] text-brand-gold animate-bounce";
+            } else {
+                adminStatusBadge?.classList.add('hidden');
+                btnAddWork?.classList.remove('flex');
+                btnAddWork?.classList.add('hidden');
+                btnEditHero?.classList.add('hidden');
+                btnEditHero?.classList.remove('flex');
+                btnEditAbout?.classList.add('hidden');
+                btnEditAbout?.classList.remove('flex');
+                if (adminLoginText) adminLoginText.textContent = "管理者ログイン";
+                if (adminIcon) adminIcon.className = "fa-solid fa-lock text-[10px]";
+            }
+
+            window.renderWorks();
+        };
+
+        // ログイン認証送信（パスワードが正しい場合のみログインを実行）
+        window.handleLoginSubmit = function(e) {
+            e.preventDefault();
+            const passwordVal = document.getElementById('admin-password')?.value || "";
+            if (passwordVal === "maple2026") {
+                isAdminLoggedIn = true;
+                window.applyAdminState();
+                window.closeLoginModal();
+            } else {
+                const loginErrorMsg = document.getElementById('login-error-msg');
+                loginErrorMsg?.classList.remove('hidden');
+            }
+        };
+
+        // モーダル開閉制御
+        window.openLoginModal = function() {
+            const m = document.getElementById('login-modal');
+            if (m) {
+                m.classList.remove('hidden');
+                m.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+            const pwInput = document.getElementById('admin-password');
+            if (pwInput) pwInput.value = "";
+            const loginErrorMsg = document.getElementById('login-error-msg');
+            if (loginErrorMsg) loginErrorMsg.classList.add('hidden');
+        };
+
+        window.closeLoginModal = function() {
+            const m = document.getElementById('login-modal');
+            m?.classList.add('hidden');
+            m?.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        };
+
+        // 🖼 トップ背景画像用モーダルの開閉と制御
+        window.openHeroModal = function() {
+            const m = document.getElementById('hero-modal');
+            const urlInput = document.getElementById('hero-image-url');
+            const currentHeroImg = document.getElementById('hero-bg-img');
+
+            if (urlInput && currentHeroImg) {
+                urlInput.value = currentHeroImg.getAttribute('src');
+            }
+
+            // 現在設定されている画像に合わせてプリセット枠を合わせる
+            const presetIndex = window.presetHeroImages.indexOf(currentHeroImg?.getAttribute('src'));
+            if (presetIndex !== -1) {
+                window.setPresetHeroImage(presetIndex);
+            } else {
+                document.querySelectorAll('.preset-hero-btn').forEach(btn => {
+                    btn.classList.remove('border-brand-gold');
+                    btn.classList.add('border-transparent');
+                });
+            }
+
+            m?.classList.remove('hidden');
+            m?.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeHeroModal = function() {
+            const m = document.getElementById('hero-modal');
+            m?.classList.add('hidden');
+            m?.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        };
+
+        window.setPresetHeroImage = function(index) {
+            const urlInput = document.getElementById('hero-image-url');
+            if (urlInput) urlInput.value = window.presetHeroImages[index];
+
+            const buttons = document.querySelectorAll('.preset-hero-btn');
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('border-brand-gold');
+                    btn.classList.remove('border-transparent');
+                } else {
+                    btn.classList.remove('border-brand-gold');
+                    btn.classList.add('border-transparent');
+                }
+            });
+        };
+
+        window.handleHeroSave = function(e) {
+            e.preventDefault();
+            const imgUrl = document.getElementById('hero-image-url')?.value || "";
+            const heroBg = document.getElementById('hero-bg-img');
+            
+            if (heroBg && imgUrl) {
+                heroBg.setAttribute('src', encodeURI(imgUrl));
+            }
+            window.closeHeroModal();
+        };
+
+        // 🖼 会社案内（About Us）背景画像モーダルの開閉と制御 (追加実装)
+        window.openAboutModal = function() {
+            const m = document.getElementById('about-modal');
+            const urlInput = document.getElementById('about-image-url');
+            const currentAboutImg = document.getElementById('about-bg-img');
+
+            if (urlInput && currentAboutImg) {
+                urlInput.value = currentAboutImg.getAttribute('src');
+            }
+
+            // 現在設定されている画像に合わせてプリセット枠を合わせる
+            const presetIndex = window.presetAboutImages.indexOf(currentAboutImg?.getAttribute('src'));
+            if (presetIndex !== -1) {
+                window.setPresetAboutImage(presetIndex);
+            } else {
+                document.querySelectorAll('.preset-about-btn').forEach(btn => {
+                    btn.classList.remove('border-brand-gold');
+                    btn.classList.add('border-transparent');
+                });
+            }
+
+            m?.classList.remove('hidden');
+            m?.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeAboutModal = function() {
+            const m = document.getElementById('about-modal');
+            m?.classList.add('hidden');
+            m?.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        };
+
+        window.setPresetAboutImage = function(index) {
+            const urlInput = document.getElementById('about-image-url');
+            if (urlInput) urlInput.value = window.presetAboutImages[index];
+
+            const buttons = document.querySelectorAll('.preset-about-btn');
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('border-brand-gold');
+                    btn.classList.remove('border-transparent');
+                } else {
+                    btn.classList.remove('border-brand-gold');
+                    btn.classList.add('border-transparent');
+                }
+            });
+        };
+
+        window.handleAboutSave = function(e) {
+            e.preventDefault();
+            const imgUrl = document.getElementById('about-image-url')?.value || "";
+            const aboutBg = document.getElementById('about-bg-img');
+            
+            if (aboutBg && imgUrl) {
+                aboutBg.setAttribute('src', encodeURI(imgUrl));
+            }
+            window.closeAboutModal();
+        };
+
+        // 実績追加・編集モーダル起動
+        window.openWorkModal = function() {
+            const m = document.getElementById('work-modal');
+            const mTitle = document.getElementById('work-modal-title');
+            if (mTitle) mTitle.textContent = "新規実績の登録";
+            
+            const editId = document.getElementById('edit-work-id');
+            const wName = document.getElementById('work-name');
+            const wDesc = document.getElementById('work-desc');
+            
+            if (editId) editId.value = "";
+            if (wName) wName.value = "";
+            if (wDesc) wDesc.value = "";
+            
+            window.setPresetImage(0);
+
+            m?.classList.remove('hidden');
+            m?.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeWorkModal = function() {
+            const m = document.getElementById('work-modal');
+            m?.classList.add('hidden');
+            m?.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        };
+
+        window.setPresetImage = function(index) {
+            const urlInput = document.getElementById('work-image-url');
+            if (urlInput) urlInput.value = window.presetImages[index];
+
+            const buttons = document.querySelectorAll('.preset-img-btn');
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('border-brand-gold');
+                    btn.classList.remove('border-transparent');
+                } else {
+                    btn.classList.remove('border-brand-gold');
+                    btn.classList.add('border-transparent');
+                }
+            });
+        };
+
+        // 施工実績の保存
+        window.handleWorkSave = function(e) {
+            e.preventDefault();
+            
+            const editId = document.getElementById('edit-work-id')?.value || "";
+            const title = document.getElementById('work-name')?.value || "";
+            const categorySelect = document.getElementById('work-category');
+            if (!categorySelect) return;
+            const category = categorySelect.value;
+            const categoryLabel = categorySelect.options[categorySelect.selectedIndex].text;
+            const desc = document.getElementById('work-desc')?.value || "";
+            const img = document.getElementById('work-image-url')?.value || "";
+
+            if (editId) {
+                const index = window.worksData.findIndex(w => w.id === editId);
+                if (index !== -1) {
+                    window.worksData[index].title = title;
+                    window.worksData[index].category = category;
+                    window.worksData[index].categoryLabel = categoryLabel;
+                    window.worksData[index].desc = desc;
+                    window.worksData[index].img = img;
+                }
+            } else {
+                const newId = "work-" + Date.now();
+                window.worksData.push({
+                    id: newId,
+                    category: category,
+                    categoryLabel: categoryLabel,
+                    title: title,
+                    desc: desc,
+                    img: img,
+                    isLarge: false
+                });
+            }
+
+            window.closeWorkModal();
+            window.renderWorks();
+        };
+
+        // 編集
+        window.editWork = function(id) {
+            const work = window.worksData.find(w => w.id === id);
+            if (!work) return;
+
+            const mTitle = document.getElementById('work-modal-title');
+            if (mTitle) mTitle.textContent = "施工実績の編集";
+            
+            const editId = document.getElementById('edit-work-id');
+            const wName = document.getElementById('work-name');
+            const wCategory = document.getElementById('work-category');
+            const wDesc = document.getElementById('work-desc');
+            const wImg = document.getElementById('work-image-url');
+            
+            if (editId) editId.value = work.id;
+            if (wName) wName.value = work.title;
+            if (wCategory) wCategory.value = work.category;
+            if (wDesc) wDesc.value = work.desc;
+            if (wImg) wImg.value = work.img;
+
+            const presetIndex = window.presetImages.indexOf(work.img);
+            if (presetIndex !== -1) {
+                window.setPresetImage(presetIndex);
+            } else {
+                document.querySelectorAll('.preset-img-btn').forEach(btn => {
+                    btn.classList.remove('border-brand-gold');
+                    btn.classList.add('border-transparent');
+                });
+            }
+
+            const m = document.getElementById('work-modal');
+            m?.classList.remove('hidden');
+            m?.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        };
+
+        // 削除
+        window.deleteWork = function(id) {
+            if (confirm("この施工実績を本当に削除しますか？\n（管理者権限で実行されます）")) {
+                window.worksData = window.worksData.filter(w => w.id !== id);
+                window.renderWorks();
+            }
+        };
+
+        // 実績一覧レンダリング
+        window.renderWorks = function() {
+            const container = document.getElementById('works-gallery-container');
+            if (!container) return;
+            container.innerHTML = "";
+            
+            window.worksData.forEach((work) => {
+                const safeTitle = sanitizeHTML(work.title);
+                const safeDesc = sanitizeHTML(work.desc);
+                const safeImg = encodeURI(work.img);
+                const safeCategory = sanitizeHTML(work.category);
+                
+                const card = document.createElement('div');
+                card.className = `${work.isLarge ? 'sm:col-span-2' : ''} group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer`;
+                
+                card.innerHTML = `
+                    <div class="aspect-video ${work.isLarge ? 'sm:aspect-[21/9]' : ''} w-full overflow-hidden relative">
+                        <img src="${safeImg}" alt="${safeTitle}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        
+                        <!-- 管理者ボタン -->
+                        <div class="admin-controls absolute top-3 right-3 z-20 flex space-x-2 ${isAdminLoggedIn ? '' : 'hidden'}">
+                            <button type="button" onclick="event.stopPropagation(); window.editWork('${work.id}')" class="bg-blue-600 hover:bg-blue-700 text-white font-black text-xs px-3.5 py-2.5 rounded-lg flex items-center space-x-1 shadow-lg transition click-trigger focus:outline-none">
+                                <i class="fa-solid fa-pen-to-square text-sm"></i>
+                                <span>編集</span>
+                            </button>
+                            <button type="button" onclick="event.stopPropagation(); window.deleteWork('${work.id}')" class="bg-red-600 hover:bg-red-700 text-white font-black text-xs px-3.5 py-2.5 rounded-lg flex items-center space-x-1 shadow-lg transition click-trigger focus:outline-none">
+                                <i class="fa-solid fa-trash-can text-sm"></i>
+                                <span>削除</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/95 via-brand-navy/35 to-transparent flex flex-col justify-end p-6">
+                        <span class="text-brand-gold text-xs font-black tracking-widest uppercase mb-1">${safeCategory}</span>
+                        <h3 class="text-white text-base sm:text-lg font-black tracking-wider">${safeTitle}</h3>
+                    </div>
+                `;
+
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.admin-controls')) return;
+                    window.openLightbox(safeImg, safeTitle, safeDesc);
+                });
+                
+                container.appendChild(card);
+            });
+        };
+
+        // ライトボックス
+        window.openLightbox = function(imgSrc, title, desc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDesc = document.getElementById('lightbox-desc');
+
+            if (lightboxImg) lightboxImg.src = imgSrc;
+            if (lightboxTitle) lightboxTitle.textContent = title;
+            if (lightboxDesc) lightboxDesc.textContent = desc;
+            
+            lightbox?.classList.remove('hidden');
+            lightbox?.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeLightbox = function() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox?.classList.add('hidden');
+            lightbox?.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        };
+
+        window.closeSuccessModal = function() {
+            const successModal = document.getElementById('success-modal');
+            successModal?.classList.add('hidden');
+            successModal?.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        };
+
+        // お問い合わせフォーム制御 (info@kawazunaiso.com 宛てハイブリッド送信設定)
+        function setupForm() {
+            const form = document.getElementById('contact-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // フォームから入力値を取得
+                    const name = document.getElementById('name').value;
+                    const phone = document.getElementById('phone').value;
+                    const email = document.getElementById('email').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
+
+                    // メールの本文（Body）を分かりやすく美しく作成
+                    const emailBody = `【有限会社メープル ホームページからのお問い合わせ】\n\n`
+                                    + `お名前: ${name}\n`
+                                    + `電話番号: ${phone}\n`
+                                    + `メールアドレス: ${email}\n`
+                                    + `お問い合わせ種別: ${subject}\n\n`
+                                    + `【メッセージ本文】\n${message}\n\n`
+                                    + `--- 送信元: 有限会社メープル コーポレートサイト ---`;
+
+                    // 件名を生成
+                    const emailSubject = `【メープルHPお問い合わせ】${subject} (送信者: ${name}様)`;
+
+                    // mailtoリンクを組み立ててブラウザを起動（info@kawazunaiso.com 宛て）
+                    // ユーザーのOutlook, Gmail, Appleメール等の標準メーラーを呼び出します
+                    const mailtoUrl = `mailto:info@kawazunaiso.com`
+                                    + `?subject=${encodeURIComponent(emailSubject)}`
+                                    + `&body=${encodeURIComponent(emailBody)}`;
+
+                    // mailtoスキームをブラウザでキック
+                    window.location.href = mailtoUrl;
+
+                    // 送信完了画面（モーダル）を表示
+                    const successModal = document.getElementById('success-modal');
+                    successModal?.classList.remove('hidden');
+                    successModal?.classList.add('flex');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // フォーム内容をリセット
+                    form.reset();
+                });
+            }
+        }
+
+        // スクロールトップボタン表示
+        function setupScrollEffects() {
+            const pagetopBtn = document.getElementById('pagetop-btn');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    pagetopBtn?.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                    pagetopBtn?.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    pagetopBtn?.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                    pagetopBtn?.classList.remove('opacity-100', 'translate-y-0');
+                }
+            });
+        }
+
+        // モバイルメニューのトリガー
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerPath = document.getElementById('hamburger-path');
+
+            mobileMenuBtn?.addEventListener('click', () => {
+                if (mobileMenu) {
+                    mobileMenu.classList.toggle('hidden');
+                    if (hamburgerPath) {
+                        if (mobileMenu.classList.contains('hidden')) {
+                            hamburgerPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                        } else {
+                            hamburgerPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                        }
+                    }
+                }
+            });
+        }
+
+        // 初期描画
+        function initApp() {
+            window.renderWorks();
+            setupForm();
+            setupScrollEffects();
+            setupMobileMenu();
+            
+            // 初回は確実に「ホーム（home）」を表示する
+            window.navigateToPage('home');
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+    </script>
+</body>
+</html>
